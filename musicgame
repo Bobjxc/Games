@@ -1,0 +1,70 @@
+#include<iostream>
+#include<conio.h>
+#include<cstdlib>
+#include<ctime>
+using namespace std;
+int x,y,score=0,combo=0;
+bool is[21][4];
+void check(char c){
+	int t;
+	if(c=='a') t=0;
+	else if(c=='s') t=1;
+	else if(c=='d') t=2;
+	else if(c=='f') t=3;
+	bool ffind=0;
+	for(int i=0;i<=5;i++){
+		if(is[i][t]){
+			score+=(3-i)*(combo/50+1);
+			is[i][t]=0;
+			ffind=1;
+			combo++;
+			break;
+		}
+	}
+	if(ffind==0) score-=1,combo=0;
+}
+void fresh(){
+	for(int i=0;i<=3;i++) if(is[0][i]){
+		score-=1;
+		combo=0;
+	}
+	for(int i=1;i<=20;i++)
+		for(int j=0;j<=3;j++) is[i-1][j]=is[i][j];
+}
+void randdom(){
+	for(int i=0;i<=3;i++) is[20][i]=0;
+	int t=rand()%4;
+	if(rand()%5==0) is[20][t]=1;
+	else is[20][t]=0;
+}
+void print(){
+	system("cls");
+	cout<<"score:"<<score<<" combo:"<<combo<<endl;
+	for(int i=20;i>=1;i--){
+		cout<<"|";
+		for(int j=0;j<=3;j++)
+			if(is[i][j]) cout<<" o |";
+			else cout<<"   |";
+		cout<<endl;
+	}
+	cout<<"|";
+	for(int i=0;i<=3;i++)
+		if(is[0][i]==0) cout<<" - |";
+		else cout<<" + |";
+}
+int main(){
+	print();
+	while(1){
+		int t=clock();
+		while(clock()-t<=50){
+			if(kbhit()){
+				char c=getch();
+				check(c);
+				print();
+			}
+		}
+		fresh();
+		randdom();
+		print();
+	}
+}
