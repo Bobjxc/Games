@@ -27,7 +27,7 @@ const int D4 = 1397;
 const int D5 = 1568;  
 const int D6 = 1760;  
 const int D7 = (1976+D6)/2;  
-const int t=500;
+const int t=700;
 int main(){
 	Beep(C1,t); Beep(D1,t); Beep(C5,t*2);
 	Beep(C4,t); Beep(D1,t); Beep(C1,t*2);
